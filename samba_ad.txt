@@ -1,0 +1,56 @@
+---srv1-hq---
+
+Установим необходимый пакет:
+
+	apt-get install task-samba-dc -y
+Настройка BIND9 для работы с Samba AD:
+Отключаем chroot:
+	control bind-chroot disabled
+Отключаем KRB5RCACHETYPE:
+	grep -q KRB5RCACHETYPE /etc/sysconfig/bind || echo 'KRB5RCACHETYPE="none"' >> /etc/sysconfig/bind
+Подключаем плагин BIND_DLZ:
+	grep -q 'bind-dns' /etc/bind/named.conf || echo 'include "/var/lib/samba/bind-dns/named.conf";' >> /etc/bind/named.conf
+Отредактируем файл /etc/bind/options.conf:
+	vim /etc/bind/options.conf
+
+меняем переменную option, добавляя:
+	tkey-gssapi-keytab "/var/lib/samba/bind-dns/dns.keytab";
+	minimal-responses yes;
+
+а также меняем переменную loggin, добавляя:
+	category lame-servers { null; };
+
+Выполняем остановку службы bind:
+	systemctl stop bind
+Необходимо очистить базы и конфигурацию Samba:
+	rm -f /etc/samba/smb.conf
+	rm -rf /var/lib/samba
+	rm -rf /var/cache/samba
+	mkdir -p /var/lib/samba/sysvol
+Запускаем интерактивную установку контроллера домена:
+	samba-tool domain provision
+Запускаем службы samba и bind:
+	systemctl enable --now samba
+	systemctl start bind
+Настраиваем Kerberos:
+	cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
+
+
+Вариант реализации:
+SRV1-HQ:
+Создаём директорию для общей папки:
+mkdir /opt/data
+Задаём права на директорию:
+chmod 777 /opt/data
+Реализуем общую папку, вносим следующую информацию в конфигурационный файл /etc/samba/smb.conf:
+[SAMBA]
+	path=/opt/data
+	comment = "SAMBA"
+	publick = yes
+	writable = yes
+	browseable = yes
+	guest ok = yes
+
+Перезагружаем службу samba:
+systemctl restart samba
+Проверяем:

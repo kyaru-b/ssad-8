@@ -1,0 +1,84 @@
+
+---srv1-hq---
+
+samba-tool dns add 127.0.0.1 au.team r-dt A 192.168.33.89 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team fw-dt A 192.168.33.90 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team fw-dt A 192.168.33.1 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team fw-dt A 192.168.33.65 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team fw-dt A 192.168.33.81 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team admin-dt A 192.168.33.82 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team srv1-dt A 192.168.33.66 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team srv2-dt A 192.168.33.67 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team srv3-dt A 192.168.33.68 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team cli-dt A 192.168.33.2 -U administrator%"P@ssw0rd"
+
+samba-tool dns add 127.0.0.1 au.team r-hq A 192.168.11.1 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team r-hq A 192.168.11.65 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team r-hq A 192.168.11.81 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team sw1-hq A 192.168.11.82 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team sw2-hq A 192.168.11.83 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team sw3-hq A 192.168.11.84 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team admin-hq A 192.168.11.85 -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team cli-hq A 192.168.11.2 -U administrator%"P@ssw0rd"
+
+
+samba-tool dns query 127.0.0.1 au.team @ A
+
+samba-tool dns zonecreate 127.0.0.1 11.168.192.in-addr.arpa
+
+samba-tool dns zonecreate 127.0.0.1 33.168.192.in-addr.arpa
+
+samba-tool dns zonelist 127.0.0.1
+
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 89 PTR r-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 90 PTR fw-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 1 PTR fw-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 65 PTR fw-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 81 PTR fw-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 82 PTR admin-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 66 PTR srv1-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 67 PTR srv2-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 68 PTR srv3-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 33.168.192.in-addr.arpa 2 PTR cli-dt.au.team -U administrator%"P@ssw0rd"
+
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 1 PTR r-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 65 PTR r-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 66 PTR srv1-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 81 PTR r-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 82 PTR sw1-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 83 PTR sw2-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 84 PTR sw3-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 85 PTR admin-hq.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 11.168.192.in-addr.arpa 2 PTR cli-hq.au.team -U administrator%"P@ssw0rd"
+
+samba-tool dns add 127.0.0.1 au.team www CNAME srv1-dt.au.team -U administrator%"P@ssw0rd"
+samba-tool dns add 127.0.0.1 au.team zabbix CNAME srv1-dt.au.team -U administrator%"P@ssw0rd"
+
+
+---srv1-hq---
+
+samba-tool group add group1
+samba-tool group add group2
+samba-tool group add group3
+
+
+for i in {1..10}; do
+  samba-tool user add user$i P@ssw0rd;
+  samba-tool user setexpiry user$i --noexpiry;
+  samba-tool group addmembers "group1" user$i;
+done
+
+for i in {11..20}; do
+  samba-tool user add user$i P@ssw0rd;
+  samba-tool user setexpiry user$i --noexpiry;
+  samba-tool group addmembers "group2" user$i;
+done
+
+for i in {21..30}; do
+  samba-tool user add user$i P@ssw0rd;
+  samba-tool user setexpiry user$i --noexpiry;
+  samba-tool group addmembers "group3" user$i;
+done
+
+samba-tool ou add 'OU=CLI'
+samba-tool ou add 'OU=ADMIN'
